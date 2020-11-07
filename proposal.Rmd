@@ -9,6 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Analyses
+1. Analyses of key states / top battlegrounds (eg: Florida, Pennsylvania, Michigan, Wisconsin, North Carolina, Arizona, Ohio, Minnesota, Iowa, Nevada, Texas, Georgia, Virginia, New Hampshire, Maine, Colorado and New Mexico)
+  a. Time trend & regression of supporting rate poll in 2020 and COVID-19 confirm/death rate, startidied by states.
+  b. Comparison of democratic / republic supporting rate between 2020 and 2016
+  c. Supporting rate distribution among mail-in ballots.
+  
+2. Analyses of all states:
+  a. Compare the COVID-19 death / confirmed case rate distribution in blue and red states.
+  b. Voting rate vs. COVID-19 death rate distribution. 
+
+
+
 ## The planned analyses / visualizations / coding challenges
 1. Mail-in ballots (nearly half of the votes) at some of the pivotal states have not yet been counted. No winner has been declared in this presidential election. Pre-election day polling statistics could be confusing as some of the voters do not participate in these polls.
 
