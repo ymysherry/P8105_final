@@ -1,0 +1,26 @@
+---
+title: "proposal"
+author: "ymysherry"
+date: "11/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The planned analyses / visualizations / coding challenges
+1. Mail-in ballots (nearly half of the votes) at some of the pivotal states have not yet been counted. No winner has been declared in this presidential election. Pre-election day polling statistics could be confusing as some of the voters do not participate in these polls.
+
+2. The comparison of supporting rates of both candidates between 2016 and 2020's election could be significantly different, because the number of voters in 2020 are significantly higher than in 2016. Sampling population in both years would not be representative enough to complete the comparative analysis.
+
+3. Test-positive rate and case-fatality rate for Covid-19 over time is influenced by the seasonal fluctuation and also vary by age groups, since older people are more likely to be infected; In addition, more testing kits are becoming  available after FEMA and state governments started to purchase them. 
+
+
+```{r cars}
+
+```
+
+## 
+
+
