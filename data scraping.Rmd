@@ -30,7 +30,9 @@ pres_1 = pres_pa %>%
          state = "PA"
          ) %>% 
 select(state,poll, date,biden, trump) %>% 
-  separate(date,into = c("start_date","end_date"), sep = "-") %>% 
+  separate(date,into = c("start_date","end_date"), sep = "-") 
+
+pres_1 = pres_1 %>% 
   mutate(
     start_date = as.Date(pres_1$start_date, "%m/%d"),
     end_date = as.Date(pres_1$end_date, "%m/%d")
@@ -49,7 +51,7 @@ state_list = list(state_name = list("florida","pennsylvania","wisconsin","north_
   url = list("https://www.realclearpolitics.com/epolls/2020/president/fl/florida_trump_vs_biden-6841.html", "https://www.realclearpolitics.com/epolls/2020/president/pa/pennsylvania_trump_vs_biden-6861.html","https://www.realclearpolitics.com/epolls/2020/president/wi/wisconsin_trump_vs_biden-6849.html", "https://www.realclearpolitics.com/epolls/2020/president/nc/north_carolina_trump_vs_biden-6744.html","https://www.realclearpolitics.com/epolls/2020/president/mi/michigan_trump_vs_biden-6761.html","https://www.realclearpolitics.com/epolls/2020/president/oh/ohio_trump_vs_biden-6765.html","https://www.realclearpolitics.com/epolls/2020/president/mn/minnesota_trump_vs_biden-6966.html","https://www.realclearpolitics.com/epolls/2020/president/ia/iowa_trump_vs_biden-6787.html","https://www.realclearpolitics.com/epolls/2020/president/az/arizona_trump_vs_biden-6807.html","https://www.realclearpolitics.com/epolls/2020/president/nv/nevada_trump_vs_biden-6867.html","https://www.realclearpolitics.com/epolls/2020/president/tx/texas_trump_vs_biden-6818.html","https://www.realclearpolitics.com/epolls/2020/president/ga/georgia_trump_vs_biden-6974.html","https://www.realclearpolitics.com/epolls/2020/president/va/virginia_trump_vs_biden-6988.html","https://www.realclearpolitics.com/epolls/2020/president/nh/new_hampshire_trump_vs_biden-6779.html","https://www.realclearpolitics.com/epolls/2020/president/me/maine_trump_vs_biden-6922.html","https://www.realclearpolitics.com/epolls/2020/president/co/colorado_trump_vs_biden-6940.html","https://www.realclearpolitics.com/epolls/2020/president/nm/new_mexico_trump_vs_biden-6993.html"))
 ```
 
-List that has 2 tabeles from FL to GA 
+List that has 2 tables from FL to GA 
 
 ```{r}
 state_list_2 = list(
@@ -131,7 +133,7 @@ Apply date function
 dateformat_list_2 = map(cleaned_list_2, date_function)
 ```
 
-List that has 2 tabeles from FL to GA 
+List that has 1 table from VA to NM
 
 ```{r}
 state_list_1 = list(
@@ -146,7 +148,7 @@ Apply url function
 
 ```{r}
 
-url_list_1 = map(state_list_2[[2]],url_function)
+url_list_1 = map(state_list_1[[2]],url_function)
 
 ```
 
