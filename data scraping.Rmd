@@ -177,19 +177,15 @@ state_poll = c(
   dateformat_list_1
 ) 
 
-state_col = tibble(
-  state_col = append(state_list_2[[1]], state_list_1[[1]])
-)
-
-poll_df = 
+poll_data = 
   tibble(
-  state = state_col,
+  state = append(state_list_2[[1]], state_list_1[[1]]),
   poll_list = state_poll
   ) %>% 
   mutate(poll_df = map(poll_list, bind_rows)) %>% 
   select(-poll_list) %>% 
   unnest(poll_df)
 
-write_csv(poll_df,"./data/state_poll.csv")
+write_csv(poll_data, "./data/state_poll.csv")
 ```
 
