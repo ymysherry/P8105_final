@@ -169,7 +169,7 @@ Apply date function
 dateformat_list_1 = map(cleaned_list_1, date_function)
 ```
 
-Combine 2 lists
+Combine 2 lists and generate the final poll dataset
 
 ```{r}
 state_poll = c(
@@ -181,11 +181,15 @@ state_col = tibble(
   state_col = append(state_list_2[[1]], state_list_1[[1]])
 )
 
-state_poll_data = 
+poll_df = 
   tibble(
   state = state_col,
-  poll_data = state_poll
-  )
+  poll_list = state_poll
+  ) %>% 
+  mutate(poll_df = map(poll_list, bind_rows)) %>% 
+  select(-poll_list) %>% 
+  unnest(poll_df)
 
+write_csv(poll_df,"./data/state_poll.csv")
 ```
 
