@@ -32,7 +32,11 @@ pres_1 = pres_pa %>%
     state = "PA"
   ) %>%
   select(state, poll, date, biden, trump) %>% 
+<<<<<<< HEAD
   separate(date, into = c("start_date", "end_date"), sep = "-") %>% 
+=======
+  separate(date, into = c("start_date","end_date"), sep = "-") %>% 
+>>>>>>> 36fca1b7737d5fce8630f3c2291297e34931edeb
   mutate(
     start_date = as.Date(pres_1$start_date, "%m/%d"),
     end_date = as.Date(pres_1$end_date, "%m/%d")
