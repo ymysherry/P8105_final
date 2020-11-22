@@ -1,0 +1,84 @@
+---
+title: "COVID Data scraping"
+date: "11/20/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+library(httr)
+```
+
+PA example
+
+```{r}
+
+pa_covid =
+  GET("https://api.covidtracking.com/v1/states/pa/daily.csv") %>% 
+  content("parsed") 
+
+pa_covid = 
+  pa_covid %>% 
+  janitor::clean_names() %>% 
+  select(state, date, positive, probable_cases, total_test_results, death, positive_increase, death_increase, data_quality_grade)
+
+```
+
+A function that scrapes data via api
+
+```{r}
+api = function(url){
+  GET(url) %>% 
+    content("parsed")
+}
+
+```
+
+A function that cleans the dataset
+
+```{r}
+
+tidy_func = function(df){
+  df %>% 
+    janitor::clean_names() %>% 
+    select(state, date, positive, probable_cases, total_test_results, death, positive_increase, death_increase, data_quality_grade)
+}
+  
+```
+
+
+Generate covid dataframe for all battlegrounds 
+
+```{r}
+covid_df = 
+  tibble(
+    state = c("fl","pa","wi","nc","mi","oh","mn","ia", "az","nv","tx","ga", "va","nh","me","co","nm")
+  ) %>% 
+  mutate(
+    url = str_c("https://api.covidtracking.com/v1/states/", state, "/daily.csv"),
+    output_list = map(url, api)
+  ) 
+
+covid_df = covid_df %>% 
+  mutate(
+    output_list = map(output_list, tidy_func),
+    output_df = map(output_list, bind_rows)
+    ) %>% 
+  select(-output_list, -url, -state) %>% 
+  unnest(output_df)
+
+covid_df = covid_df %>% 
+  drop_na(data_quality_grade) %>% 
+  mutate(
+    total_case = positive + probable_cases
+  ) %>% 
+  relocate(state, date, positive, probable_cases, total_case)
+
+```
+
+Save the csv file
+
+```{r}
+write_csv(covid_df, "./data/covid.csv")
+```
