@@ -47,7 +47,7 @@ List that has 2 tables from FL to GA
 ```{r}
 
 state_list_2 = list(
-  state_name = c("florida","pennsylvania","wisconsin","north_carolina","michigan","ohio","minnesota","iowa", "arizona","nevada","texax","georgia"),
+  state_name = c("florida","pennsylvania","wisconsin","north_carolina","michigan","ohio","minnesota","iowa", "arizona","nevada","texas","georgia"),
 
                 url = c("https://www.realclearpolitics.com/epolls/2020/president/fl/florida_trump_vs_biden-6841.html", "https://www.realclearpolitics.com/epolls/2020/president/pa/pennsylvania_trump_vs_biden-6861.html","https://www.realclearpolitics.com/epolls/2020/president/wi/wisconsin_trump_vs_biden-6849.html", "https://www.realclearpolitics.com/epolls/2020/president/nc/north_carolina_trump_vs_biden-6744.html","https://www.realclearpolitics.com/epolls/2020/president/mi/michigan_trump_vs_biden-6761.html","https://www.realclearpolitics.com/epolls/2020/president/oh/ohio_trump_vs_biden-6765.html","https://www.realclearpolitics.com/epolls/2020/president/mn/minnesota_trump_vs_biden-6966.html","https://www.realclearpolitics.com/epolls/2020/president/ia/iowa_trump_vs_biden-6787.html","https://www.realclearpolitics.com/epolls/2020/president/az/arizona_trump_vs_biden-6807.html","https://www.realclearpolitics.com/epolls/2020/president/nv/nevada_trump_vs_biden-6867.html","https://www.realclearpolitics.com/epolls/2020/president/tx/texas_trump_vs_biden-6818.html","https://www.realclearpolitics.com/epolls/2020/president/ga/georgia_trump_vs_biden-6974.html")
 )
