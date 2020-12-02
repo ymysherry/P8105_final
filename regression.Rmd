@@ -1,0 +1,74 @@
+---
+title: "Regression of death"
+date: "11/20/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+library(httr)
+library(lubridate)
+```
+
+
+```{r}
+covid_df = read.csv("./data/covid.csv")
+poll_df = read_csv("./data/state_poll_20.csv")
+
+covid_df = covid_df %>% mutate(
+  date=as.Date(date)
+)
+```
+
+```{r}
+state_list = list(c("florida","pennsylvania","wisconsin","north_carolina","michigan","ohio","minnesota","iowa", "arizona","nevada","texas","georgia","virginia","new_hampshire","maine","colorado","new_mexico"))
+```
+
+```{r}
+covid_function = function(x){
+filter(covid_df,state==x)
+}
+```
+
+```{r}
+regress_list = map(.x=state_list[[1]],covid_function) %>% rbind()
+
+regression_list_3 = 
+  tibble(
+    state=state_list[[1]],
+  covid=c(regress_list)
+  )
+
+regression_full = full_join(poll_data,regression_list_3)
+save(regression_full, file="./data/regression.RData")
+```
+
+load data
+```{r}
+load("./data/regression.RData")
+
+
+```
+
+
+florida example
+
+```{r}
+florida = regression_full %>% filter(state=="florida")
+
+florida_1 = florida[[2]][[1]] %>% mutate(
+  period = interval(florida[[2]][[1]]$start_date,florida[[2]][[1]]$end_date)
+)
+
+
+int = interval (ymd('2020-10-28'),ymd('2020-11-02'))
+
+
+florida_3 = florida[[3]][[1]] %>% 
+  mutate(
+    logic = ifelse(date %within% int,1,0)
+  ) %>% filter(logic==1)
+
+```
+
