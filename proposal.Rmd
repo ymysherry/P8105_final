@@ -46,7 +46,7 @@ A website that includes a report of our exploratory analyses, regression analysi
 ## Visualization:
 1. 3 Linear graphs representing the change of supporting rate of democratic and republican, and the COVID-19 confirmed/death rate respectively on the same panel
 
-2. Histograms showing the supporting rate of democratic in 2020 and 2016 and it of repulbican in 2020 and 2016
+2. Bar plots showing the supporting rate of democratic in 2020 and 2016 and it of republican in 2020 and 2016
 
 3. Pie plot showing the distribution of democratic and republican among the mail-in ballots in 2020
 
