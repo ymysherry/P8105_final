@@ -71,8 +71,30 @@ covid_df = covid_df %>%
 covid_df = covid_df %>% 
   drop_na(data_quality_grade) %>% 
   mutate(
-    total_case = positive + probable_cases
+    date = lubridate::ymd(date),
+    total_case = positive + probable_cases,
+    state_name = case_when(
+      state =="FL" ~ "florida",
+      state =="PA" ~ "pennsylvania",
+      state =="WI" ~ "wisconsin",
+      state =="NC" ~ "north_carolina",
+      state =="MI" ~ "michigan",
+      state =="OH" ~ "ohio",
+      state =="MN" ~ "minnesota",
+      state =="IA" ~ "iowa", 
+      state =="AZ" ~ "arizona",
+      state =="NV" ~ "nevada",
+      state =="TX" ~ "texas",
+      state =="GA" ~ "georgia",
+      state =="VA" ~ "virginia",
+      state =="NH" ~ "new_hampshire",
+      state =="ME" ~ "maine",
+      state =="CO" ~ "colorado",
+      state =="NM" ~ "new_mexico"
+    )
   ) %>% 
+  select(-state) %>% 
+  rename(state = state_name) %>% 
   relocate(state, date, positive, probable_cases, total_case)
 
 ```
