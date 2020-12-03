@@ -13,11 +13,11 @@ library(lubridate)
 
 
 ```{r}
-covid_df = read.csv("./data/covid.csv")
-poll_df = read_csv("./data/state_poll_20.csv")
+covid_df = read.csv("./data/covid.csv") 
+poll_df = read_csv("./data/state_poll_20.csv") %>% drop_na()
 
 covid_df = covid_df %>% mutate(
-  date=as.Date(date)
+  date = as.Date(date)
 )
 ```
 
@@ -27,48 +27,87 @@ state_list = list(c("florida","pennsylvania","wisconsin","north_carolina","michi
 
 ```{r}
 covid_function = function(x){
-filter(covid_df,state==x)
+filter(covid_df,state == x)
 }
 ```
 
 ```{r}
-regress_list = map(.x=state_list[[1]],covid_function) %>% rbind()
+regress_list = map(.x = state_list[[1]],covid_function) %>% rbind()
 
 regression_list_3 = 
   tibble(
-    state=state_list[[1]],
-  covid=c(regress_list)
+    state = state_list[[1]],
+  covid = c(regress_list)
   )
 
 regression_full = full_join(poll_data,regression_list_3)
-save(regression_full, file="./data/regression.RData")
+save(regression_full, file = "./data/regression.RData")
 ```
 
 load data
 ```{r}
 load("./data/regression.RData")
-
-
 ```
 
 
 florida example
 
 ```{r}
-florida = regression_full %>% filter(state=="florida")
+florida = regression_full %>% filter(state == "florida")
 
 florida_1 = florida[[2]][[1]] %>% mutate(
   period = interval(florida[[2]][[1]]$start_date,florida[[2]][[1]]$end_date)
 )
 
 
-int = interval (ymd('2020-10-28'),ymd('2020-11-02'))
-
+int = interval(ymd('2020-10-28'),ymd('2020-11-02'))
 
 florida_3 = florida[[3]][[1]] %>% 
   mutate(
     logic = ifelse(date %within% int,1,0)
-  ) %>% filter(logic==1)
+  ) %>% filter(logic == 1)
+
+```
+
+
+function that outputs covid df in the interval
+
+```{r}
+match = function(interval, state_name) {
+  covid_df %>%
+    filter(state == state_name) %>% 
+    mutate(logic = date %within% interval) %>% 
+    filter(logic == TRUE)
+}
+```
+
+function that generates means of case, death, postive increase, and death increase.
+
+```{r}
+mean_value = function(df){
+  tibble(
+    mean_case = mean(df$total_case),
+    mean_death = mean(df$death),
+    mean_pos_increase = mean(df$positive_increase),
+    mean_death_increase = mean(df$death_increase)
+  ) 
+}
+
+```
+
+
+Create the regression df
+
+```{r}
+poll_covid_df = 
+  poll_df %>% 
+  mutate(
+    interval = interval(ymd(start_date), ymd(end_date)),
+    covid_list = map2(.x = interval, .y = state, ~ match(.x, .y)),
+    mean_outputs = map(.x = covid_list, ~ mean_value(.x))
+  ) %>% 
+  select(state, biden, mean_outputs) %>% 
+  unnest(mean_outputs)
 
 ```
 
