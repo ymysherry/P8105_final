@@ -14,7 +14,9 @@ library(lubridate)
 
 ```{r}
 covid_df = read.csv("./data/covid.csv") 
-poll_df = read_csv("./data/state_poll_20.csv") %>% drop_na()
+poll_df = read_csv("./data/state_poll_20.csv") %>% 
+  drop_na() 
+  
 
 covid_df = covid_df %>% mutate(
   date = as.Date(date)
@@ -89,7 +91,8 @@ mean_value = function(df){
     mean_case = mean(df$total_case),
     mean_death = mean(df$death),
     mean_pos_increase = mean(df$positive_increase),
-    mean_death_increase = mean(df$death_increase)
+    mean_death_increase = mean(df$death_increase),
+    mean_change = mean(df$change_biden)
   ) 
 }
 
@@ -107,7 +110,23 @@ poll_covid_df =
     mean_outputs = map(.x = covid_list, ~ mean_value(.x))
   ) %>% 
   select(state, biden, mean_outputs) %>% 
-  unnest(mean_outputs)
+  unnest(mean_outputs) 
+
+poll_covid_df =
+  poll_covid_df %>% 
+  mutate(
+    id = min_rank(state)
+  )
+
+```
+
+```{r}
+install.packages("gee")
+
+library(gee)
+
+summary(gee(biden ~ mean_death_increase, data = poll_covid_df, id = id, corstr = "exchangeable"))
+
 
 ```
 
