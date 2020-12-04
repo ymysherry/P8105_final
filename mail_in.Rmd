@@ -28,11 +28,28 @@ scale_fill_discrete = scale_fill_viridis_d
 
 ## Comparison of both candidates' mail-in votes
 
-
+#Compare the number of mail-in ballots of dem/rep in each state
 
 ```{r}
-mailin_df =
-  read_csv("data/mail_in.csv")
+returnedballots_df =
+  read_csv("data/mail_in.csv") %>% 
+  select(state, party, returned_ballots) %>% 
+  filter(party %in% c("Democrats", "Republicans")) %>%
+  group_by(state, party) 
  
+
+plot_returned_ballots = 
+  returnedballots_df %>%
+  ggplot(aes(x = state, y = returned_ballots, fill = party)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(
+  title = "The number of returned mail-in ballots of each party by state",
+  x = "State",
+  y = "Number of returned mail-in ballots",
+  caption = "Data from 'https://electproject.github.io/Early-Vote-2020G/'"
+  )
+  
+
 ```
 
